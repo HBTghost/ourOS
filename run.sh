@@ -14,7 +14,7 @@ grub-file --is-x86-multiboot ourOS.bin
 
 #building the iso file
 mkdir -p isodir/boot/grub
-cp ourOS.bin isodir/boot/ourMy.bin
+cp ourOS.bin isodir/boot/ourOS.bin
 cp grub.cfg isodir/boot/grub/grub.cfg
 grub-mkrescue -o ourOS.iso isodir
 
@@ -27,5 +27,7 @@ rm ourOS.bin
 rm -rf isodir
 
 #run it in qemu
-# qemu-system-x86_64 -cdrom ourOS.iso
+qemu-system-x86_64 -cdrom ourOS.iso
+
+#message
 echo ">>> Our OS is compiled successfully, located in this folder - ourOS.iso <<<"
