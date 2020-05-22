@@ -331,9 +331,9 @@ void about(uint8 align) {
   print_color_string(" OS GROUP ", BRIGHT_MAGENTA, BLACK);
   next_line_index += 2;
   gotoxy(align - 8, next_line_index++);
-  print_color_string("1. 18127xxx - TRAN MINH DUC", WHITE, BLACK);
+  print_color_string("1. 18127027 - TRAN MINH DUC", WHITE, BLACK);
   gotoxy(align - 8, next_line_index++);
-  print_color_string("2. 18127xxx - NGUYEN VU THU HIEN", WHITE, BLACK);
+  print_color_string("2. 18127004 - NGUYEN VU THU HIEN", WHITE, BLACK);
   gotoxy(align - 8, next_line_index++);
   print_color_string("3. 18127208 - NGO THANH PHUONG THAI", WHITE, BLACK);
 }
