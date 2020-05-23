@@ -51,3 +51,68 @@ int atoi(char* s)
   }
   return num;
 }
+
+
+void print_int(int num)
+{
+  char str_num[digit_count(num)+1];
+  itoa(num, str_num);
+  print_string(str_num);
+}
+void print_string(char *str)
+{
+  uint32 index = 0;
+  while(str[index]){
+    print_char(str[index]);
+    index++;
+  }
+}
+
+uint8 inb(uint16 port)
+{
+  uint8 data;
+  asm volatile("inb %1, %0" : "=a"(data) : "Nd"(port));
+  return data;
+}
+
+void outb(uint16 port, uint8 data)
+{
+  asm volatile("outb %0, %1" : : "a"(data), "Nd"(port));
+}
+
+void move_cursor(uint16 pos)
+{
+  outb(0x3D4, 14);
+  outb(0x3D5, ((pos >> 8) & 0x00FF));
+  outb(0x3D4, 15);
+  outb(0x3D5, pos & 0x00FF);
+}
+char get_input_keycode()
+{
+  char ch = 0;
+  while((ch = inb(KEYBOARD_PORT)) != 0){
+    if(ch > 0)
+      return ch;
+  }
+  return ch;
+}
+
+/*
+keep the cpu busy for doing nothing(nop)
+so that io port will not be processed by cpu
+here timer can also be used, but lets do this in looping counter
+*/
+void wait_for_io(uint32 timer_count)
+{
+  while(1){
+    asm volatile("nop");
+    timer_count--;
+    if(timer_count <= 0)
+      break;
+    }
+}
+
+void sleep(uint32 timer_count)
+{
+  wait_for_io(timer_count*0x02FFFFFF);
+}
