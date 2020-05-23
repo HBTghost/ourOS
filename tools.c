@@ -43,6 +43,26 @@ void read_string(char* res)
     sleep(2);
   } while(ch > 0);
 }
+void read_pass(char* res)
+{
+  char ch = 0;
+  char keycode = 0;
+  int index = 0;
+  do{
+    keycode = get_input_keycode();
+    if (keycode == KEY_ENTER){
+      res[index] = '\0';
+      print_new_line();
+      break;
+    } else{
+      ch = get_ascii_char(keycode);
+      print_char('*');
+      res[index] = ch;
+      index++;
+    }
+    sleep(2);
+  } while(ch > 0);
+}
 
 uint8 match(char* a, char* b) {
   uint8 i = 0;
@@ -51,7 +71,7 @@ uint8 match(char* a, char* b) {
       return 0;
     }
   }
-  return 1; 
+  return a[i] == b[i]; 
 }
 
 uint8 signIn(uint32 align, uint32 line) {
@@ -65,7 +85,7 @@ uint8 signIn(uint32 align, uint32 line) {
   sleep(2);
   gotoxy(align, line++);
   print_color_string("Password: ", BLUE, BLACK);
-  read_string(input);
+  read_pass(input);
   isMatch = isMatch && match(input, "12345678\0");
 
   gotoxy(align, line++);

@@ -305,9 +305,9 @@ uint8 validation() {
     print_color_string(title, BRIGHT_GREEN, BLACK);
     draw_box(BOX_DOUBLELINE, 0, 0, BOX_MAX_WIDTH, BOX_MAX_HEIGHT, CYAN, BLACK);
 
-    gotoxy(baseAlign, next_line_index++);
+    gotoxy(baseAlign+5, next_line_index++);
     print_color_string("LOG IN", RED, BLACK);
-    if (signIn(baseAlign - 2, next_line_index)) {
+    if (signIn(baseAlign, next_line_index)) {
       break;
     }
 
