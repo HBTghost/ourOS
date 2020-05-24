@@ -38,6 +38,10 @@ enum vga_color {
     WHITE,
 };
 
+
+uint8 inb(uint16 port);
+void print_string(char *str);
+void outb(uint16 port, uint8 data);
 #include "keyboard.h"
 
 #endif

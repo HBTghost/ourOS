@@ -1,13 +1,18 @@
 #assemble boot.s file
 as --32 boot.s -o boot.o
 
-#compile kernel.c file
+
+
 gcc -m32 -c kernel.c -o kernel.o -std=gnu99 -ffreestanding -O1 -Wall -Wextra
+
+gcc -m32 -c string.c -o string.o -std=gnu99 -ffreestanding -O1 -Wall -Wextra
 
 gcc -m32 -c utils.c -o utils.o -std=gnu99 -ffreestanding -O1 -Wall -Wextra
 
+gcc -m32 -c time.c -o time.o -std=gnu99 -ffreestanding -O1 -Wall -Wextra
+
 #linking the kernel with kernel.o and boot.o files
-ld -m elf_i386 -T linker.ld kernel.o utils.o boot.o -o ourOS.bin -nostdlib
+ld -m elf_i386 -T linker.ld kernel.o string.o utils.o boot.o time.o -o ourOS.bin -nostdlib
 
 #check ourOS.bin file is x86 multiboot file or not
 grub-file --is-x86-multiboot ourOS.bin
@@ -22,8 +27,8 @@ grub-mkrescue -o ourOS.iso isodir
 rm kernel.o
 rm utils.o
 rm boot.o
+rm time.o
 rm ourOS.bin
-
 rm -rf isodir
 
 #run it in qemu

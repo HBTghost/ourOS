@@ -1,7 +1,7 @@
 #include "kernel.h"
 #include "utils.h"
 #include "char.c"
-
+#include "time.h"
 uint32 vga_index;
 static uint32 next_line_index = 1;
 uint8 g_fore_color = WHITE, g_back_color = BLUE;
@@ -392,6 +392,7 @@ void tool() {
     display_menu(baseAlign);
     gotoxy(baseAlign, next_line_index++);
     print_color_string("Enter your choice: ", WHITE, BLACK);
+    test_time();
     choice = read_int();
     switch(choice){
       case 1:
@@ -426,6 +427,7 @@ void tool() {
         gotoxy(baseAlign, ++next_line_index);
         print_color_string("Exited...", WHITE, BLACK);
         return;
+
       default:
         gotoxy(baseAlign, ++next_line_index);
         print_color_string("Invalid choice...!", WHITE, BLACK);
