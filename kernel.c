@@ -9,7 +9,7 @@ int digit_ascii_codes[10] = {0x30, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x3
 uint16 cursor_pos = 0, cursor_next_line_index = 1;
 #define CALC_SLEEP 8
 
-uint16 vga_entry(unsigned char ch, uint8 fore_color, uint8 back_color) 
+uint16 vga_entry(unsigned char ch, uint8 fore_color, uint8 back_color)
 {
   uint16 ax = 0;
   uint8 ah = 0, al = 0;
@@ -36,7 +36,7 @@ void clear_vga_buffer(uint16 **buffer, uint8 fore_color, uint8 back_color)
 }
 
 void init_vga(uint8 fore_color, uint8 back_color)
-{  
+{
   vga_buffer = (uint16*)VGA_ADDRESS;
   clear_vga_buffer(&vga_buffer, fore_color, back_color);
   g_fore_color = fore_color;
@@ -112,7 +112,7 @@ void gotoxy(uint16 x, uint16 y)
   vga_index += x;
 }
 
-void draw_generic_box(uint16 x, uint16 y, 
+void draw_generic_box(uint16 x, uint16 y,
                       uint16 width, uint16 height,
                       uint8 fore_color, uint8 back_color,
                       uint8 topleft_ch,
@@ -175,21 +175,21 @@ void draw_generic_box(uint16 x, uint16 y,
   vga_index = 0;
 }
 
-void draw_box(uint8 boxtype, 
-              uint16 x, uint16 y, 
+void draw_box(uint8 boxtype,
+              uint16 x, uint16 y,
               uint16 width, uint16 height,
               uint8 fore_color, uint8 back_color)
 {
   switch(boxtype){
-    case BOX_SINGLELINE : 
-      draw_generic_box(x, y, width, height, 
-                      fore_color, back_color, 
+    case BOX_SINGLELINE :
+      draw_generic_box(x, y, width, height,
+                      fore_color, back_color,
                       218, 196, 191, 179, 192, 217);
       break;
 
-    case BOX_DOUBLELINE : 
-      draw_generic_box(x, y, width, height, 
-                      fore_color, back_color, 
+    case BOX_DOUBLELINE :
+      draw_generic_box(x, y, width, height,
+                      fore_color, back_color,
                       201, 205, 187, 186, 200, 188);
       break;
   }

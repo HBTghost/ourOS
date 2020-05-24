@@ -4,13 +4,13 @@
 #include <stdio.h>
 #define DEFAULT_HUSO 1
 
-bool fmt12 = 0 ;
+bool fmt12 = false;
 const char *_days[] = {
   "Sunday", "Monday", "Tuesday", "Wednesday",
   "Thursday", "Friday", "Saturday"
 };
 
-static int currentHuso = 1;
+static int currentHuso = 2;
 
 
 typedef struct
@@ -23,15 +23,9 @@ typedef struct
 
 const huso husos[] =
 {
-    { 1, "Buenos Aires  ", "ART",  -3 },
-    { 2, "Rio de Janeiro", "BRT", -3 },
-    { 3, "Mexico DF     ", "CDT",-6 },
-    { 4, "San Francisco ", "PDT",-8 },
-    { 5, "Washington DC ", "EDT",-5 },
-    { 6, "Londres       ", "BST",0 },
-    { 7, "Sidney        ", "MDT",+10 },
-    { 8, "Tokio         ", "JST",+9 },
-    { 9, "Moscu         ", "MSK",+4 }
+    
+    { 1, "GMT  ", "GMT",  0 },
+     { 2, "Viet Nam" , "HCM" , +7}, 
 };
 
 const char *_days_abbrev[] = {
@@ -60,10 +54,10 @@ char * asctime(char * str_time, const time_t_clone * tp, int fmt, int showday) {
     char day[3];
     char year[3];
     if(fmt) {
-        wday = ((tp->tm_wday & 0xF0) >> 4) * 10 + (tp->tm_wday & 0x0F);
+        wday = ((tp->tm_wday & 0xF0) >> 4) * 10 + (tp->tm_wday & 0x0F) - 0x01;
         strcpy(str_time, _days_abbrev[wday]);
         strcat(str_time, " ");
-        mon = ((tp->tm_mon & 0xF0) >> 4) * 10 + (tp->tm_mon & 0x0F);
+        mon = ((tp->tm_mon & 0xF0) >> 4) * 10 + (tp->tm_mon & 0x0F) - 0x01; 
         strcat(str_time, _months_abbrev[mon]);
         strcat(str_time, " ");
     }
