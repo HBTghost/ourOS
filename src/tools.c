@@ -93,7 +93,7 @@ uint8 match(char* a, char* b) {
 
 uint8 signIn(uint32 align, uint32 line) {
   gotoxy(align, line++);
-  print_color_string("Username: ", BLUE, BLACK);
+  print_color_string("Username: ", BRIGHT_BLUE, BLACK);
   uint8 isMatch;
   char input[10];
   read_string(input);
@@ -101,21 +101,21 @@ uint8 signIn(uint32 align, uint32 line) {
 
   sleep(CALC_SLEEP);
   gotoxy(align, line++);
-  print_color_string("Password: ", BLUE, BLACK);
+  print_color_string("Password: ", BRIGHT_BLUE, BLACK);
   
   read_string(input);
   
   isMatch = match(input, "12345");
 
   if (isMatch == 1) {
-    gotoxy(align+5, ++line);
-    print_color_string("MATCH", CYAN, BLACK);
+    gotoxy(align+2, ++line);
+    print_color_string("SUCCESSFULLY", BRIGHT_GREEN, BLACK);
     sleep(CALC_SLEEP + 2);
     clear_screen();
     return 1;
   } else {
-    gotoxy(align+4, ++line);
-    print_color_string("NOT MATCH", BRIGHT_RED, BLACK);
+    gotoxy(align+1, ++line);
+    print_color_string("UNSUCCESSFULLY", BRIGHT_RED, BLACK);
   }
 
   return 0;

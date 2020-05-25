@@ -43,13 +43,20 @@ int read_int()
       data[index] = '\0';
       print_new_line();
       break;
-    }
-    else
-    {
+    } else if (keycode == KEY_BACKSPACE) {
+      if (index > 0) {
+        --index;
+        backspace();
+      }
+    } else {
       ch = get_ascii_char(keycode);
       print_char(ch);
-      data[index] = ch;
-      index++;
+      if (ch >= '0' && ch <= '9') {
+        data[index] = ch;
+        index++;
+      } else {
+        return 0;
+      }
     }
     sleep(CALC_SLEEP);
   } while (ch > 0);
