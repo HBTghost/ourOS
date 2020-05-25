@@ -105,7 +105,7 @@ uint8 tool() {
         gotoxy(baseAlign, 1);
         print_color_string(title, BRIGHT_MAGENTA, BLACK);
         draw_generic_box(baseAlign-1, 0, strlen(title), 1, BRIGHT_GREEN, BLACK, 3, 3, 3, 3, 3, 3);
-        about(baseAlign+1);
+        about(baseAlign+2);
         ++next_line_index;
         break;
       case 5:
