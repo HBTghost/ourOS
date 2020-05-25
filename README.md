@@ -8,6 +8,8 @@ qemu-system-x86_64 -cdrom ourOS.iso
 + QEMU
 + GCC 
 + NASM
++ GCC MultiLib
+    sudo apt-get install gcc-multilib
 
 # Setup
 make
