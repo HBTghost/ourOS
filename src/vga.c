@@ -1,4 +1,16 @@
 #include "../include/vga.h"
+
+
+void goFromHere(int x, int y) {
+  vga_index += x + 80*y;
+}
+
+void backspace() {
+  goFromHere(-1, 0);
+  print_char(' ');
+  goFromHere(-1, 0);
+}
+
 uint16 vga_entry(unsigned char ch, uint8 fore_color, uint8 back_color)
 {
   uint16 ax = 0;

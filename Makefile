@@ -3,7 +3,7 @@ GCC_FLAGS = -Wall -fno-stack-protector -fno-builtin -m32 -I $(INCLUDE_DIR)
 NASM_FLAGS = -f elf32 -I $(INCLUDE_DIR)
 
 	# kstart to link with any module
-MODULES = boot io kernel keyboard vga string utils time
+MODULES = boot io tools kernel keyboard vga string utils time
 
 
 OBJECTS = $(MODULES:%=obj/%.o)

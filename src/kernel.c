@@ -2,27 +2,54 @@
 #include "utils.h"
 #include "char.c"
 #include "time.h"
+#include "tools.h"
+
+uint8 validation() {
+  init_vga(WHITE, BLACK);
+  const char* title = "OS GROUP PROJECT";
+  uint8 baseAlign = (VGA_MAX_WIDTH/2)-strlen(title)/2;
+
+  while(1) {
+    next_line_index = 1;
+    gotoxy(baseAlign, ++next_line_index);
+    ++next_line_index;
+    print_color_string(title, BRIGHT_GREEN, BLACK);
+    draw_generic_box(0, 0, BOX_MAX_WIDTH, BOX_MAX_HEIGHT, BROWN, BLACK, 14, 14, 14, 14, 14, 14);
+    draw_generic_box(baseAlign-2, 1, strlen(title)+2, 1, DARK_GREY, BLACK, 3, 3, 3, 3, 3, 3);
 
 
-#define  CALC_SLEEP 1
+    next_line_index += 6;
+    draw_generic_box(baseAlign-2, next_line_index, 18, 4, MAGENTA, BLACK, 3, 3, 3, 3, 3, 3);
+    gotoxy(baseAlign+4, next_line_index++);
+    print_color_string(" LOG IN ", YELLOW, BLACK);
+    if (signIn(baseAlign, next_line_index)) {
+      break;
+    }
 
+    next_line_index += 4;
+    gotoxy(baseAlign-8, next_line_index);
+    print_color_string("Press any key to reload screen...", WHITE, BLACK);
+    getchar();
+    clear_screen();
+  }
+  tool();
+}
 
 void display_menu(uint8 align)
 {
   next_line_index += 2;
+  gotoxy(align+3, next_line_index++);
+  print_color_string(" MENU ", YELLOW, BLACK);
   gotoxy(align, next_line_index++);
-  print_color_string("--- Menu ---", WHITE, BLACK);
+  print_color_string("1. CLOCK", WHITE, BLACK);
   gotoxy(align, next_line_index++);
-  print_color_string("1. Fibonacci", WHITE, BLACK);
+  print_color_string("2. Fibonacci", WHITE, BLACK);
   gotoxy(align, next_line_index++);
-  print_color_string("2. Factorial", WHITE, BLACK);
-  gotoxy(align, next_line_index++);
-  print_color_string("3. Time", WHITE, BLACK);
+  print_color_string("3. Factorial", WHITE, BLACK);
   gotoxy(align, next_line_index++);
   print_color_string("4. About us", WHITE, BLACK);
   gotoxy(align, next_line_index++);
   print_color_string("5. Exit", WHITE, BLACK);
-  gotoxy(align, next_line_index++);
 }
 void about(uint8 align)
 {
@@ -56,100 +83,93 @@ void read_number(uint8 *num)
   *num = read_int();
 }
 
-uint32 fib(uint8 n)
-{
-  uint32 a1 = 1, a2 = 1;
-  if (n == 1 || n == 2)
-  {
-    return 1;
-  }
-
-  uint32 i = 3, a;
-  while (i <= n)
-  {
-    a = a1 + a2;
-    a1 = a2;
-    a2 = a;
-    i++;
-  }
-  return a;
-}
-
-uint32 fac(uint8 n)
-{
-  uint32 fact = 1;
-  for (uint8 i = 1; i <= n; ++i)
-  {
-    fact *= i;
-  }
-  return fact;
-}
-
-void tool()
-{
+void tool() {
 
   init_vga(WHITE, BLACK);
-  const char *title = "OS GROUP PROJECT";
-  uint8 baseAlign = (VGA_MAX_WIDTH / 2) - strlen(title) / 2;
+  const char* title = "OS GROUP PROJECT";
+  uint8 baseAlign = (VGA_MAX_WIDTH/2)-strlen(title)/2;
 
-  uint8 num, choice;
-  while (1)
-  {
+  uint8 num;
+  int choice;
+  while(1) {
     next_line_index = 1;
-    gotoxy(baseAlign, next_line_index);
+    gotoxy(baseAlign, ++next_line_index);
+    ++next_line_index;
     print_color_string(title, BRIGHT_GREEN, BLACK);
-    draw_box(BOX_DOUBLELINE, 0, 0, BOX_MAX_WIDTH, BOX_MAX_HEIGHT, CYAN, BLACK);
-    display_menu(baseAlign);
-    gotoxy(baseAlign, next_line_index++);
+    draw_generic_box(0, 0, BOX_MAX_WIDTH, BOX_MAX_HEIGHT, CYAN, BLACK, 14, 14, 14, 14, 14, 14);
+    draw_generic_box(baseAlign-2, 1, strlen(title)+2, 1, GREY, BLACK, 3, 3, 3, 3, 3, 3);
+
+
+    ++next_line_index;
+
+    draw_generic_box(baseAlign-1, next_line_index+2, 16, 5, MAGENTA, BLACK, 3, 3, 3, 3, 3, 3);
+    display_menu(baseAlign+2);
+    next_line_index += 2;
+    gotoxy(baseAlign-1, next_line_index++);
     print_color_string("Enter your choice: ", WHITE, BLACK);
     choice = read_int();
-    switch (choice)
-    {
-    case 1:
-      gotoxy(baseAlign, ++next_line_index);
-      print_color_string("Fibonacci of n = ", WHITE, BLACK);
-      read_number(&num);
-      gotoxy(baseAlign, ++next_line_index);
-      print_color_string("Result: ", WHITE, BLACK);
-      print_int(fib(num));
-      break;
-    case 2:
-      gotoxy(baseAlign, ++next_line_index);
-      print_color_string("Factorial of n = ", WHITE, BLACK);
-      read_number(&num);
-      gotoxy(baseAlign, ++next_line_index);
-      print_color_string("Result: ", WHITE, BLACK);
-      print_int(fac(num));
-      break;
-    case 3: 
-      gotoxy(baseAlign, ++next_line_index);
-      print_color_string("Time:", RED, BLACK);
-      //print_time_now_struct();
-      print_time_locale();
-      break;
-    case 4:
-      clear_screen();
-      next_line_index = 1;
-      gotoxy(baseAlign, next_line_index);
-      print_color_string(title, BRIGHT_GREEN, BLACK);
-      draw_box(BOX_DOUBLELINE, 0, 0, BOX_MAX_WIDTH, BOX_MAX_HEIGHT, CYAN, BLACK);
-      about(baseAlign);
-      break;
-    case 5:
-      gotoxy(baseAlign, ++next_line_index);
-      print_color_string("Exiting from Calculator...", WHITE, BLACK);
-      sleep(CALC_SLEEP * 3);
-      clear_screen();
-      gotoxy(baseAlign, ++next_line_index);
-      print_color_string("Exited...", WHITE, BLACK);
-      return;
+    switch(choice){
+      case 1:
+        gotoxy(baseAlign, ++next_line_index);
+        print_color_string("TIME NOW: ", BRIGHT_RED, BLACK);
+        print_time_locale();
+        break;
+      case 2:
+        gotoxy(baseAlign, ++next_line_index);
+        print_color_string("Fibonacci of n = ", BRIGHT_RED, BLACK);
+        read_number(&num);
+        gotoxy(baseAlign, ++next_line_index);
+        print_color_string("Result: ", BRIGHT_RED, BLACK);
+        print_int(fib(num));
+        break;
+      case 3:
+        gotoxy(baseAlign, ++next_line_index);
+        print_color_string("Factorial of n = ", BRIGHT_RED, BLACK);
+        read_number(&num);
+        gotoxy(baseAlign, ++next_line_index);
+        print_color_string("Result: ", BRIGHT_RED, BLACK);
+        print_int(fac(num));
+        break;
+      case 4:
+        clear_screen();
+        next_line_index = 1;
+        gotoxy(baseAlign, ++next_line_index);
+        ++next_line_index;
+        print_color_string(title, BRIGHT_GREEN, BLACK);
+        draw_generic_box(0, 0, BOX_MAX_WIDTH, BOX_MAX_HEIGHT, CYAN, BLACK, 14, 14, 14, 14, 14, 14);
+        draw_generic_box(baseAlign-2, 1, strlen(title)+2, 1, GREY, BLACK, 3, 3, 3, 3, 3, 3);
 
-    default:
-      gotoxy(baseAlign, ++next_line_index);
-      print_color_string("Invalid choice...!", WHITE, BLACK);
-      break;
+
+        ++next_line_index;
+
+        about(baseAlign+1);
+        break;
+      case 5:
+        gotoxy(baseAlign, ++next_line_index);
+        print_color_string("Exiting from Calculator...", WHITE, BLACK);
+        sleep(CALC_SLEEP*3);
+        clear_screen();
+        for (int i = 0; i < 12; ++i) {
+          draw_box(BOX_DOUBLELINE, baseAlign-1-2*i, next_line_index+10-i, 18+4*i, 1+2*i, i, BLACK);
+        }
+        gotoxy(baseAlign, next_line_index+11);
+        print_char(' ');
+        print_char(3);
+        print_char(3);
+        print_char(3);
+        print_color_string(" GOOD BYE ", YELLOW, BLACK);
+        print_char(3);
+        print_char(3);
+        print_char(3);
+        print_char(' ');
+        return;
+      default:
+        gotoxy(baseAlign, ++next_line_index);
+        print_color_string("Invalid choice...!", WHITE, BLACK);
+        break;
     }
-    gotoxy(baseAlign, ++next_line_index);
+    next_line_index += 2;
+    gotoxy(baseAlign-8, next_line_index);
     print_color_string("Press any key to reload screen...", WHITE, BLACK);
     getchar();
     clear_screen();
@@ -158,6 +178,8 @@ void tool()
 
 void kernel_entry()
 {
-  getchar();
-  tool();
+  sleep(CALC_SLEEP);
+  //getchar();
+  validation();
+
 }

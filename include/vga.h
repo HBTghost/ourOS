@@ -9,6 +9,9 @@ static uint32 next_line_index= 1;
 
 static uint16 cursor_pos =0;
 static uint16 cursor_next_line_index =1 ;
+
+void goFromHere(int x, int y);
+void backspace();
 uint16 vga_entry(unsigned char ch, uint8 fore_color, uint8 back_color);
 void clear_vga_buffer(uint16 **buffer, uint8 fore_color, uint8 back_color);
 void init_vga(uint8 fore_color, uint8 back_color);
@@ -37,5 +40,6 @@ void print_color_string(char *str, uint8 fore_color, uint8 back_color);
 void print_int(int num); 
 void move_cursor(uint16 pos);
 void move_cursor_next_line();
+
 
 #endif
