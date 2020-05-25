@@ -1,3 +1,16 @@
-### Command to build iso: *chmod +x run.sh && ./run.sh*
+# mxos
+mxOS Kernel - Operating System
 
-### If don't want to run iso file with qemu virtual machine, just comment line 30 in file **run.sh**
+# Release
+qemu-system-x86_64 -cdrom ourOS.iso
+
+# Preparing
++ QEMU
++ GCC 
++ NASM
+
+# Setup
+make
+
+# Clean build
+make clean
