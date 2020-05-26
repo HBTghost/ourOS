@@ -76,7 +76,18 @@ uint8 tool() {
       case 1:
         gotoxy(baseAlign-10, ++next_line_index);
         print_color_string("Time now: ", BRIGHT_BLUE, BLACK);
-        print_time_locale();
+        print_color_string("Result: ", BRIGHT_BLUE, BLACK);
+        char timeString[24] = {0};
+        time_t_clone t;
+        read_time(&t);
+        convert_asc(timeString, &t);
+        print_string(timeString);
+        
+        //next_line_index += 2;
+        //gotoxy(baseAlign-7, next_line_index);
+        //print_color_string("Press any key to reload screen...", WHITE, BLACK);
+        //getchar();
+        //clear_screen();
         break;
       case 2:
         gotoxy(baseAlign, ++next_line_index);

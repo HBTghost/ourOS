@@ -207,6 +207,7 @@ void print_string(char *str)
     print_char(str[index]);
     index++;
   }
+  
 }
 
 void print_color_string(char *str, uint8 fore_color, uint8 back_color)
