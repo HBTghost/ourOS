@@ -226,7 +226,7 @@ uint8 showHistory(uint32 align, uint32 line) {
   gotoxy(align-7, ++line);
   print_char(26);
   print_char(' ');
-  print_color_string(loginTimes[times], BRIGHT_BLUE, BLACK);
+  print_color_string(loginTimes[times], GREEN, BLACK);
   line += 2;
   return line;
 }
