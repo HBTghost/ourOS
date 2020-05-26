@@ -99,6 +99,7 @@ char *convert_asc(char *str_time , const time_t_clone *t)
     strcat(str_time, " ");
     strcat(str_time, _time);
     
+    //strcat(str_time, '\0');
 
     return str_time;
 }
@@ -188,7 +189,6 @@ void print_time_now_struct(){
     print_string("- Month"); //5
     //print_int(t.tm_moprint_time_localeear"); //32
     print_int(t.tm_year);
-
 }
 void print_time_locale()
 {
@@ -196,5 +196,6 @@ void print_time_locale()
     time_t_clone t;
     read_time(&t);
     print_string (convert_asc(timeString, &t));
+
     //print_string(asctime(timeString, &t, 1, 1));
 }
