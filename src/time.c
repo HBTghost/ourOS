@@ -42,7 +42,8 @@ const char *_months_short_label[] = {
     "Jan", "Feb", "Mar",
     "Apr", "May", "Jun",
     "Jul", "Aug", "Sep",
-    "Oct", "Nov", "Dec"};int i = 0
+    "Oct", "Nov", "Dec"};
+    
 
 char *convert_asc(char *str_time , const time_t_clone *t)
 {
