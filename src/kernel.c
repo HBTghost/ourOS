@@ -135,6 +135,7 @@ uint8 tool() {
         next_line_index = showHistory(baseAlign, next_line_index);
         break;
       case 7:
+        addLogoutTimes();
         return 1;
       case 8:
         gotoxy(baseAlign-4, ++next_line_index);
