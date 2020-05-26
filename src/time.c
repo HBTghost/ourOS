@@ -42,7 +42,7 @@ const char *_months_short_label[] = {
     "Jan", "Feb", "Mar",
     "Apr", "May", "Jun",
     "Jul", "Aug", "Sep",
-    "Oct", "Nov", "Dec"};
+    "Oct", "Nov", "Dec"};int i = 0
 
 char *convert_asc(char *str_time , const time_t_clone *t)
 {
@@ -197,4 +197,14 @@ void print_time_locale()
     read_time(&t);
     print_string (convert_asc(timeString, &t));
     //print_string(asctime(timeString, &t, 1, 1));
+}
+char* get_cur_time(char* t) {
+    char timeString[24] = {0};
+    time_t_clone t_clone;
+    read_time(&t_clone);
+    print_string (convert_asc(timeString, &t_clone));
+    for (int i = 0; i < 24; ++i) {
+      t[i] = timeString[i];
+    }
+    return t;
 }

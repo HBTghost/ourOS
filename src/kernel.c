@@ -18,9 +18,13 @@ void display_menu(uint8 align)
   gotoxy(align, next_line_index++);
   print_color_string("4. About us", WHITE, BLACK);
   gotoxy(align, next_line_index++);
-  print_color_string("5. Log out", WHITE, BLACK);
+  print_color_string("5. Edit pass", WHITE, BLACK);
   gotoxy(align, next_line_index++);
-  print_color_string("6. Exit", WHITE, BLACK);
+  print_color_string("6. History", WHITE, BLACK);
+  gotoxy(align, next_line_index++);
+  print_color_string("7. Log out", WHITE, BLACK);
+  gotoxy(align, next_line_index++);
+  print_color_string("8. Exit", WHITE, BLACK);
 }
 void about(uint8 align)
 {
@@ -62,7 +66,7 @@ uint8 tool() {
 
     ++next_line_index;
 
-    draw_box(BOX_DOUBLELINE, baseAlign, next_line_index+2, 16, 6, MAGENTA, BLACK);
+    draw_box(BOX_DOUBLELINE, baseAlign, next_line_index+2, 16, 8, MAGENTA, BLACK);
     display_menu(baseAlign+3);
     next_line_index += 2;
     gotoxy(baseAlign-1, next_line_index++);
@@ -109,8 +113,21 @@ uint8 tool() {
         ++next_line_index;
         break;
       case 5:
-        return 1;
+        if (!validateUser(baseAlign, next_line_index)) {
+          next_line_index += 2;
+          break;
+        } else {
+          changePass(baseAlign, next_line_index);
+          next_line_index += 3;
+        }
+        break;
       case 6:
+        showHistory(baseAlign, next_line_index);
+        next_line_index += 10;
+        break;
+      case 7:
+        return 1;
+      case 8:
         gotoxy(baseAlign-4, ++next_line_index);
         print_color_string("Exiting from Calculator...", BRIGHT_BLUE, BLACK);
         sleep(CALC_SLEEP*3);

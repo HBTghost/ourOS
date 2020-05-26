@@ -1,8 +1,8 @@
 #include "tools.h"
 
-
-
-
+char pwd[10] = "\0";
+uint8 times = 0;
+char loginTimes[10][24];
 
 uint32 fib(uint8 n) {
   uint32 a1 = 1, a2 = 1;
@@ -91,25 +91,40 @@ uint8 match(char* a, char* b) {
   return 0;
 }
 
+char* getPass(char* pass) {
+  if (match(pwd, "\0")) {
+    pass = "12345\0";
+  } else {
+    pass = pwd;
+  }
+  return pass;
+}
+
+void addHistory() {
+  get_cur_time(loginTimes[times++ % 10]);
+}
+
 uint8 signIn(uint32 align, uint32 line) {
   gotoxy(align, line++);
   print_color_string("Username: ", BRIGHT_BLUE, BLACK);
   uint8 isMatch;
   char input[10];
   read_string(input);
-  isMatch = match(input, "ADMIN");
+  isMatch = match(input, "ADMIN\0");
 
   sleep(CALC_SLEEP);
   gotoxy(align, line++);
   print_color_string("Password: ", BRIGHT_BLUE, BLACK);
   
-  read_string(input);
+  read_pass(input);
   
-  isMatch = match(input, "12345");
+  char* pass;
+  isMatch = match(input, getPass(pass));
 
   if (isMatch == 1) {
     gotoxy(align+2, ++line);
     print_color_string("SUCCESSFULLY", BRIGHT_GREEN, BLACK);
+    addHistory();
     sleep(CALC_SLEEP + 2);
     clear_screen();
     return 1;
@@ -119,4 +134,69 @@ uint8 signIn(uint32 align, uint32 line) {
   }
 
   return 0;
+}
+
+uint8 validateUser(uint32 align, uint32 line) {
+  sleep(CALC_SLEEP);
+  gotoxy(align-2, line+1);
+  print_color_string("Enter current password: ", BRIGHT_BLUE, BLACK);
+  char input[10], pass[10];
+  read_pass(input);
+  if (match(input, getPass(pass))) {
+    gotoxy(align-2, line+2);
+    print_color_string("Password is correct!", BRIGHT_GREEN, BLACK);
+    sleep(CALC_SLEEP + 2);
+    return 1;
+  } else {
+    gotoxy(align-10, line+2);
+    print_color_string("Password is incorrect! Please try again!", BRIGHT_RED, BLACK);
+    return 0;
+  }
+}
+
+void changePass(uint32 align, uint32 line) {
+  sleep(CALC_SLEEP);
+  while (1) {
+    for (int i = 0; i < 5; ++i) {
+      gotoxy(2, line+1+i);
+      for (int j = 0; j < 70; ++j) {
+        print_char(' ');
+      }
+    }
+
+    gotoxy(align-2, line+1);
+    char pass1[10], pass2[10];
+    print_color_string("Enter new password: ", BRIGHT_BLUE, BLACK);
+    read_pass(pass1);
+    sleep(CALC_SLEEP);
+
+    gotoxy(align-2, line+2);
+    print_color_string("ReEnter new password: ", BRIGHT_BLUE, BLACK);
+    read_pass(pass2);
+    sleep(CALC_SLEEP);
+
+    if (match(pass1, pass2)) {
+      int i = 0;
+      for (; i < strlen(pass1); ++i) {
+        pwd[i] = pass1[i];
+      }
+      pwd[i] = '\0';
+      gotoxy(align-2, line+3);
+      print_color_string("Successfully!!", BRIGHT_GREEN, BLACK);
+      return;
+    } else {
+      gotoxy(align-2, line+3);
+      print_color_string("Two password doesn't match", BRIGHT_RED, BLACK);
+      gotoxy(align-2, line+5);
+      print_color_string("Press any key to try again", WHITE, BLACK);
+      getchar();
+    }
+  }
+}
+
+void showHistory(uint32 align, uint32 line) {
+  for (int i = 0; i < times; ++i) {
+    gotoxy(align-2, line + 1 + i);
+    print_color_string(loginTimes[i], WHITE, BLACK);
+  } 
 }

@@ -22,7 +22,7 @@ ourOS: $(OBJECTS)
 	#cp mtask iso/boot/
 	#cp boot/stage2_eltorito boot/menu.lst iso/boot/grub/
 	#mkisofs -R -b boot/grub/stage2_eltorito -no-emul-boot -boot-load-size 4 -boot-info-table -o mtask.iso iso
-	qemu-system-x86_64 -cdrom ourOS.iso
+	#qemu-system-x86_64 -cdrom ourOS.iso
 
 .PHONY: clean
 clean:

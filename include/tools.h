@@ -3,6 +3,7 @@
 
 #include "utils.h"
 #include "kernel.h"
+#include "time.h"
 
 extern uint32 fib(uint8);
 extern uint32 fac(uint8);
