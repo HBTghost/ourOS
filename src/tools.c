@@ -2,6 +2,7 @@
 
 char pwd[10] = "\0";
 uint8 times = 0;
+uint8 loop = 0;
 char loginTimes[5][40];
 char logoutTimes[5][40];
 
@@ -58,7 +59,7 @@ void read_pass(char* res)
   char ch = 0;
   char keycode = 0;
   int index = 0;
-  do{
+  do {
     keycode = get_input_keycode();
     if (keycode == KEY_ENTER){
       res[index] = '\0';
@@ -102,7 +103,10 @@ char* getPass(char* pass) {
 }
 
 void addLoginTimes() {
-  times %= 5;
+  if (times > 4) {
+    times %= 5;
+    loop = 1;
+  }
   get_cur_time(loginTimes[times]);
 }
 void addLogoutTimes() {
@@ -201,26 +205,28 @@ void changePass(uint32 align, uint32 line) {
 
 uint8 showHistory(uint32 align, uint32 line) {
   line += 2;
-  draw_box(BOX_DOUBLELINE, align - 9, ++line, 34, (times+1)*3, CYAN, BLACK);
+  int size = loop ? 5 : times;
+  int s = loop ? 4 : times;
+  int pad = loop ? times + 1 : times;
+  draw_box(BOX_DOUBLELINE, align - 9, ++line, 34, (s+1)*3, CYAN, BLACK);
   gotoxy(align + 4, line++);
   print_color_string(" HISTORY ", YELLOW, BLACK);
-  int i = 0;
-  for (; i < times; ++i) {
+  for (int i = 0; i < s; ++i) {
     gotoxy(align-7, ++line);
     print_char(26);
     print_char(' ');
-    print_color_string(loginTimes[i], BRIGHT_BLUE, BLACK);
+    print_color_string(loginTimes[(i+pad)%size], BRIGHT_BLUE, BLACK);
 
     gotoxy(align-7, ++line);
     print_char(27);
     print_char(' ');
-    print_color_string(logoutTimes[i], BRIGHT_RED, BLACK);
+    print_color_string(logoutTimes[(i+pad)%size], BRIGHT_RED, BLACK);
     ++line;
   }
   gotoxy(align-7, ++line);
   print_char(26);
   print_char(' ');
-  print_color_string(loginTimes[i], BRIGHT_BLUE, BLACK);
+  print_color_string(loginTimes[times], BRIGHT_BLUE, BLACK);
   line += 2;
   return line;
 }

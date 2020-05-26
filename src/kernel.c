@@ -40,7 +40,7 @@ void about(uint8 align)
   print_color_string("2. 18127004 - NGUYEN VU THU HIEN", WHITE, BLACK);
   gotoxy(align - 7, next_line_index);
   print_color_string("3. 18127208 - NGO THANH PHUONG THAI", WHITE, BLACK);
-  next_line_index += 2;
+  ++next_line_index;
 }
 
 void read_number(uint8 *num)
