@@ -193,7 +193,7 @@ void print_time_now_struct(){
 }
 void print_time_locale()
 {
-    char timeString[24] = {0};
+    char timeString[40] = {0};
     time_t_clone t;
     read_time(&t);
     print_string (convert_asc(timeString, &t));
@@ -201,11 +201,11 @@ void print_time_locale()
     //print_string(asctime(timeString, &t, 1, 1));
 }
 char* get_cur_time(char* t) {
-    char timeString[24] = {0};
+    char timeString[40] = {0};
     time_t_clone t_clone;
     read_time(&t_clone);
-    print_string (convert_asc(timeString, &t_clone));
-    for (int i = 0; i < 24; ++i) {
+    convert_asc(timeString, &t_clone);
+    for (int i = 0; i < 40; ++i) {
       t[i] = timeString[i];
     }
     return t;

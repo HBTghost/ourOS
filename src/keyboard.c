@@ -26,7 +26,7 @@ void wait_for_io(uint32 timer_count)
 
 void sleep(uint32 timer_count)
 {
-  wait_for_io(timer_count * 0x02FFFFFF);
+  wait_for_io(timer_count * 0x020FFFFF);
 }
 
 int read_int()

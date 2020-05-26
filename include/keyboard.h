@@ -1,7 +1,7 @@
 #ifndef KEYBOARD_H
 #define KEYBOARD_H
 #include "kernel.h"
-#define CALC_SLEEP 2
+#define CALC_SLEEP 1
 #define KEYBOARD_PORT 0x60
 
 

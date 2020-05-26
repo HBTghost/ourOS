@@ -2,7 +2,7 @@
 
 char pwd[10] = "\0";
 uint8 times = 0;
-char loginTimes[10][24];
+char loginTimes[10][40];
 
 uint32 fib(uint8 n) {
   uint32 a1 = 1, a2 = 1;
@@ -194,9 +194,17 @@ void changePass(uint32 align, uint32 line) {
   }
 }
 
-void showHistory(uint32 align, uint32 line) {
+uint8 showHistory(uint32 align, uint32 line) {
+  line += 2;
+  draw_box(BOX_DOUBLELINE, align - 9, ++line, 34, times+2, CYAN, BLACK);
+  gotoxy(align + 4, line++);
+  print_color_string(" HISTORY ", YELLOW, BLACK);
   for (int i = 0; i < times; ++i) {
-    gotoxy(align-2, line + 1 + i);
+    gotoxy(align-7, ++line);
+    print_char(14);
+    print_char(' ');
     print_color_string(loginTimes[i], WHITE, BLACK);
-  } 
+  }
+  line += 2;
+  return line;
 }

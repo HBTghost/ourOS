@@ -30,7 +30,7 @@ void about(uint8 align)
 {
   align -= 4;
   next_line_index += 2;
-  draw_box(BOX_DOUBLELINE, align - 10, ++next_line_index, 39, 5, MAGENTA, BLACK);
+  draw_box(BOX_DOUBLELINE, align - 10, ++next_line_index, 39, 5, CYAN, BLACK);
   gotoxy(align + 6, next_line_index);
   print_color_string(" OS GROUP ", YELLOW, BLACK);
   next_line_index += 2;
@@ -66,7 +66,7 @@ uint8 tool() {
 
     ++next_line_index;
 
-    draw_box(BOX_DOUBLELINE, baseAlign, next_line_index+2, 16, 8, MAGENTA, BLACK);
+    draw_box(BOX_DOUBLELINE, baseAlign, next_line_index+2, 16, 8, CYAN, BLACK);
     display_menu(baseAlign+3);
     next_line_index += 2;
     gotoxy(baseAlign-1, next_line_index++);
@@ -76,18 +76,11 @@ uint8 tool() {
       case 1:
         gotoxy(baseAlign-10, ++next_line_index);
         print_color_string("Time now: ", BRIGHT_BLUE, BLACK);
-        print_color_string("Result: ", BRIGHT_BLUE, BLACK);
         char timeString[24] = {0};
         time_t_clone t;
         read_time(&t);
         convert_asc(timeString, &t);
         print_string(timeString);
-        
-        //next_line_index += 2;
-        //gotoxy(baseAlign-7, next_line_index);
-        //print_color_string("Press any key to reload screen...", WHITE, BLACK);
-        //getchar();
-        //clear_screen();
         break;
       case 2:
         gotoxy(baseAlign, ++next_line_index);
@@ -133,8 +126,13 @@ uint8 tool() {
         }
         break;
       case 6:
-        showHistory(baseAlign, next_line_index);
-        next_line_index += 10;
+        clear_screen();
+        next_line_index = 1;
+        draw_generic_box(0, 1, BOX_MAX_WIDTH, BOX_MAX_HEIGHT-1, BROWN, BLACK, 4, 4, 4, 4, 4, 4);
+        gotoxy(baseAlign, 1);
+        print_color_string(title, BRIGHT_MAGENTA, BLACK);
+        draw_generic_box(baseAlign-1, 0, strlen(title), 1, BRIGHT_GREEN, BLACK, 3, 3, 3, 3, 3, 3);
+        next_line_index = showHistory(baseAlign, next_line_index);
         break;
       case 7:
         return 1;
@@ -185,8 +183,7 @@ uint8 validation() {
 
 
     next_line_index += 6;
-    // draw_generic_box(baseAlign-2, next_line_index, 18, 4, MAGENTA, BLACK, 3, 3, 3, 3, 3, 3);
-    draw_box(BOX_DOUBLELINE, baseAlign - 1, next_line_index, 18, 4, MAGENTA, BLACK);
+    draw_box(BOX_DOUBLELINE, baseAlign - 1, next_line_index, 18, 4, CYAN, BLACK);
     gotoxy(baseAlign+5, next_line_index++);
     print_color_string(" LOG IN ", YELLOW, BLACK);
     if (signIn(baseAlign+1, next_line_index)) {
